@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { CustomersModel } from '../model/customers.model.js';
 
 export const customersController = {
@@ -8,7 +9,7 @@ export const customersController = {
       const skip = (page - 1) * limit;
       const [items, total] = await Promise.all([
         CustomersModel.find({})
-          .select('-password')
+          .select('-password -refreshToken')
           .skip(skip)
           .limit(limit)
           .lean(),
@@ -23,7 +24,7 @@ export const customersController = {
     try {
       const { id } = req.params;
       const customer = await CustomersModel.findById(id)
-        .select('-password')
+        .select('-password -refreshToken')
         .lean();
       if (!customer) return res.status(404).json({ message: 'Not found' });
       res.json(customer);
@@ -33,9 +34,16 @@ export const customersController = {
   },
   create: async (req, res, next) => {
     try {
-      const customer = req.body;
-      const newCustomer = await CustomersModel.create(customer);
-      res.status(201).json(newCustomer);
+      const { password, ...customer } = req.body;
+      const hash = await bcrypt.hash(password, 10);
+      const newCustomer = await CustomersModel.create({
+        ...customer,
+        password: hash,
+      });
+      const result = newCustomer.toObject();
+      delete result.password;
+      delete result.refreshToken;
+      res.status(201).json(result);
     } catch (err) {
       next(err);
     }
@@ -43,8 +51,12 @@ export const customersController = {
   update: async (req, res, next) => {
     try {
       const { id } = req.params;
-      const data = req.body;
-      const updated = await CustomersModel.updateOne({ _id: id }, data);
+      const { password, ...data } = req.body;
+      const updateData = { ...data };
+      if (password) {
+        updateData.password = await bcrypt.hash(password, 10);
+      }
+      const updated = await CustomersModel.updateOne({ _id: id }, updateData);
       res.json(updated);
     } catch (err) {
       next(err);

@@ -123,13 +123,31 @@ const router = Router();
 
 router
   .route('/')
-  .get(authGuard, addressController.find)
-  .post(authGuard, validate(addressSchema), addressController.create);
+  .get(authGuard, roleGuard('admin'), addressController.find)
+  .post(
+    authGuard,
+    roleGuard('admin', 'customer'),
+    validate(addressSchema),
+    addressController.create
+  );
 
 router
   .route('/:id')
-  .get(authGuard, addressController.findOne)
-  .patch(authGuard, validate(addressSchema), addressController.update)
-  .delete(authGuard, roleGuard('admin','delivery_staff'), addressController.delete);
+  .get(
+    authGuard,
+    roleGuard('admin', 'delivery_staff'),
+    addressController.findOne
+  )
+  .patch(
+    authGuard,
+    roleGuard('admin', 'customer'),
+    validate(addressSchema),
+    addressController.update
+  )
+  .delete(
+    authGuard,
+    roleGuard('admin', 'delivery_staff'),
+    addressController.delete
+  );
 
 export { router as addressRouter };

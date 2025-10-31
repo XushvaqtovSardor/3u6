@@ -128,10 +128,10 @@ router
   .get(authGuard, paymentsController.findOne)
   .patch(
     authGuard,
-    roleGuard('admin'),
+    roleGuard('admin', 'customer'),
     validate(paymentSchema),
     paymentsController.update
   )
-  .delete(authGuard, roleGuard('admin'), paymentsController.delete);
+  .delete(authGuard, roleGuard('admin', 'customer'), paymentsController.delete);
 
 export { router as paymentsRouter };

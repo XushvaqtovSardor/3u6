@@ -9,6 +9,16 @@ router.post(
   validate(authSchemas.register),
   authController.register
 );
+router.post(
+  '/verify-otp',
+  validate(authSchemas.verifyOTP),
+  authController.verifyOTP
+);
+router.post(
+  '/resend-otp',
+  validate(authSchemas.resendOTP),
+  authController.resendOTP
+);
 router.post('/login', validate(authSchemas.login), authController.login);
 router.post('/refresh', validate(authSchemas.refresh), authController.refresh);
 router.post('/logout', validate(authSchemas.logout), authController.logout);

@@ -1,10 +1,10 @@
-import nodemailer from 'nodemailer';
 import 'dotenv/config';
 import express from 'express';
 import morgan from 'morgan';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { dbConnect } from './config/index.js';
+import { transporter } from './helpers/sendEmail.js';
 import MainRouter from './routes/index.js';
 import errorHandler from './helpers/errorHandler.js';
 
@@ -17,7 +17,7 @@ const swaggerOptions = {
     info: {
       title: 'Water Delivery API',
       version: '1.0.0',
-      description: 'Water delivery management system API documentation',
+      description: 'Water',
     },
     servers: [
       {
@@ -53,18 +53,11 @@ app.listen(PORT, async () => {
   console.log(`API Docs: http://localhost:${PORT}/api-docs`);
 
   try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.Google_Mail,
-        pass: process.env.GOOOGLE_APP_PASSWORD,
-      },
-    });
     const info = await transporter.sendMail({
-      from: `"Xushvaqtov Sardor" <${process.env.Google_Mail}>`,
-      to: process.env.ADMIN_EMAIL || process.env.Google_Mail,
+      from: `"Xushvaqtov Sardor" <${process.env.email_user}>`,
+      to: process.env.email_user,
       subject: 'Server Started',
-      html: '<b>Hello World! Server is running.</b>',
+      html: '<b>Server started.</b>',
     });
     console.log('Message sent:', info.messageId);
   } catch (error) {

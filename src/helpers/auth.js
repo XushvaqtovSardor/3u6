@@ -10,6 +10,8 @@ export const authGuard = async (req, res, next) => {
     const payload = verifyAccessToken(token);
     const user = await CustomersModel.findById(payload.id).select('-password');
     if (!user) return res.status(401).json({ message: 'Unauthorized' });
+    if (!user.isActive)
+      return res.status(403).json({ message: 'Account not verified' });
     req.user = { id: user._id.toString(), role: user.role };
     next();
   } catch {
@@ -26,15 +28,14 @@ export const roleGuard = (...allowedRoles) => {
   };
 };
 
-export const selfGuard = (owner = 'customer_id') => {
+export const selfGuard = () => {
   return (req, res, next) => {
     const user = req.user;
     if (!user) return res.status(401).json({ message: 'Unauthorized' });
     if (user.role === 'admin') return next();
-    const resourceOwnerId =
-      req.params.id || req.body[owner] || req.query[owner];
+    const resourceOwnerId = req.params.id;
     if (!resourceOwnerId)
-      return res.status(400).json({ message: 'owner id required' });
+      return res.status(400).json({ message: 'ID required' });
     if (resourceOwnerId.toString() === user.id.toString()) return next();
     return res.status(403).json({ message: 'Forbidden' });
   };

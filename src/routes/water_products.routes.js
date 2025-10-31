@@ -119,7 +119,12 @@ const router = Router();
 router
   .route('/')
   .get(water_productsController.find)
-  .post(validate(waterProductSchema), water_productsController.create);
+  .post(
+    authGuard,
+    roleGuard('admin'),
+    validate(waterProductSchema),
+    water_productsController.create
+  );
 
 router
   .route('/:id')

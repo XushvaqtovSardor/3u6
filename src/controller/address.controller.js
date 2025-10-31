@@ -17,6 +17,9 @@ export const addressController = {
           .lean(),
         AddressModel.countDocuments(query),
       ]);
+      console.log(items);
+      console.log(total);
+
       res.json({ data: items, total, page, limit });
     } catch (err) {
       next(err);

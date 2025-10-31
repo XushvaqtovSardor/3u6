@@ -1,4 +1,4 @@
-import mongoose, { model, Schema, Types } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
 
 const OrdersSchema = new Schema({
   customer_id: {

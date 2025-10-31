@@ -123,7 +123,12 @@ const router = Router();
 router
   .route('/')
   .get(authGuard, ordersController.find)
-  .post(authGuard, validate(orderSchema), ordersController.create);
+  .post(
+    authGuard,
+    roleGuard('admin', 'customer'),
+    validate(orderSchema),
+    ordersController.create
+  );
 
 router
   .route('/:id')
@@ -134,6 +139,6 @@ router
     validate(orderSchema),
     ordersController.update
   )
-  .delete(authGuard, roleGuard('admin'), ordersController.delete);
+  .delete(authGuard, roleGuard('admin', 'customer'), ordersController.delete);
 
 export { router as ordersRouter };

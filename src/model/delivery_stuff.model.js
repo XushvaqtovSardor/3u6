@@ -1,4 +1,4 @@
-import mongoose, { model, Schema, Types } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
 const Delivery_stuff = new Schema({
   name: {
     type: String,

@@ -17,9 +17,17 @@ export const validate = (schema) => {
 export const authSchemas = {
   register: Joi.object({
     name: Joi.string().min(2).max(100).required(),
+    email: Joi.string().email().required(),
     phone: Joi.string().min(9).max(20).required(),
     password: Joi.string().min(6).required(),
     role: Joi.string().valid('admin', 'delivery_staff', 'customer'),
+  }),
+  verifyOTP: Joi.object({
+    userId: Joi.string().hex().length(24).required(),
+    otp: Joi.string().length(6).required(),
+  }),
+  resendOTP: Joi.object({
+    userId: Joi.string().hex().length(24).required(),
   }),
   login: Joi.object({
     phone: Joi.string().required(),
