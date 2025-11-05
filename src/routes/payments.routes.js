@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import { paymentsController } from '../controller/payments.controller.js';
-import { authGuard, roleGuard } from '../helpers/auth.js';
-import { validate, paymentSchema } from '../validation/validation.js';
+import { Router } from "express";
+import { paymentsController } from "../controller/payments.controller.js";
+import { authGuard, roleGuard } from "../helpers/auth.js";
+import { validate, paymentSchema } from "../validation/validation.js";
 
 const router = Router();
 
@@ -119,19 +119,19 @@ const router = Router();
  */
 
 router
-  .route('/')
+  .route("/")
   .get(authGuard, paymentsController.find)
   .post(authGuard, validate(paymentSchema), paymentsController.create);
 
 router
-  .route('/:id')
+  .route("/:id")
   .get(authGuard, paymentsController.findOne)
   .patch(
     authGuard,
-    roleGuard('admin', 'customer'),
+    roleGuard("admin", "customer"),
     validate(paymentSchema),
-    paymentsController.update
+    paymentsController.update,
   )
-  .delete(authGuard, roleGuard('admin', 'customer'), paymentsController.delete);
+  .delete(authGuard, roleGuard("admin", "customer"), paymentsController.delete);
 
 export { router as paymentsRouter };

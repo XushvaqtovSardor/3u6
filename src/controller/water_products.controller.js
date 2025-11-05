@@ -1,10 +1,10 @@
-import { Water_productModel } from '../model/water_products.model.js';
+import { Water_productModel } from "../model/water_products.model.js";
 
 export const water_productsController = {
   find: async (req, res, next) => {
     try {
-      const page = Math.max(1, parseInt(req.query.page || '1'));
-      const limit = Math.max(1, parseInt(req.query.limit || '10'));
+      const page = Math.max(1, parseInt(req.query.page || "1"));
+      const limit = Math.max(1, parseInt(req.query.limit || "10"));
       const skip = (page - 1) * limit;
       const [items, total] = await Promise.all([
         Water_productModel.find({}).skip(skip).limit(limit).lean(),
@@ -19,7 +19,7 @@ export const water_productsController = {
     try {
       const { id } = req.params;
       const product = await Water_productModel.findById(id).lean();
-      if (!product) return res.status(404).json({ message: 'Not found' });
+      if (!product) return res.status(404).json({ message: "Not found" });
       res.json(product);
     } catch (err) {
       next(err);

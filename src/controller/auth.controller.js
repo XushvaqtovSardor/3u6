@@ -1,11 +1,11 @@
-import bcrypt from 'bcrypt';
-import { CustomersModel } from '../model/customers.model.js';
+import bcrypt from "bcrypt";
+import { CustomersModel } from "../model/customers.model.js";
 import {
   signAccessToken,
   signRefreshToken,
   verifyRefreshToken,
-} from '../helpers/jwt.js';
-import { sendEmail } from '../helpers/sendEmail.js';
+} from "../helpers/jwt.js";
+import { sendEmail } from "../helpers/sendEmail.js";
 
 const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000).toString();
@@ -21,7 +21,7 @@ export const authController = {
       if (existing)
         return res
           .status(400)
-          .json({ message: 'Phone or email already exists' });
+          .json({ message: "Phone or email already exists" });
       const hash = await bcrypt.hash(password, 10);
       const otp = generateOTP();
       const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
@@ -36,11 +36,11 @@ export const authController = {
       });
       await sendEmail(
         email,
-        'Email Verification - OTP Code',
-        `<h2>Welcome ${name}!</h2><p>Your OTP code is: <strong>${otp}</strong></p><p>This code will expire in 10 minutes.</p>`
+        "Email Verification - OTP Code",
+        `<h2>Welcome ${name}!</h2><p>Your OTP code is: <strong>${otp}</strong></p><p>This code will expire in 10 minutes.</p>`,
       );
       res.status(201).json({
-        message: 'User registered. Please verify your email with OTP.',
+        message: "User registered. Please verify your email with OTP.",
         userId: user._id,
       });
     } catch (err) {
@@ -51,18 +51,18 @@ export const authController = {
     try {
       const { userId, otp } = req.body;
       const user = await CustomersModel.findById(userId);
-      if (!user) return res.status(404).json({ message: 'User not found' });
+      if (!user) return res.status(404).json({ message: "User not found" });
       if (user.isActive)
-        return res.status(400).json({ message: 'User already verified' });
+        return res.status(400).json({ message: "User already verified" });
       if (!user.otp || user.otp !== otp)
-        return res.status(400).json({ message: 'Invalid OTP' });
+        return res.status(400).json({ message: "Invalid OTP" });
       if (new Date() > user.otpExpires)
-        return res.status(400).json({ message: 'OTP expired' });
+        return res.status(400).json({ message: "OTP expired" });
       user.isActive = true;
       user.otp = null;
       user.otpExpires = null;
       await user.save();
-      res.json({ message: 'Email verified successfully' });
+      res.json({ message: "Email verified successfully" });
     } catch (err) {
       next(err);
     }
@@ -71,9 +71,9 @@ export const authController = {
     try {
       const { userId } = req.body;
       const user = await CustomersModel.findById(userId);
-      if (!user) return res.status(404).json({ message: 'User not found' });
+      if (!user) return res.status(404).json({ message: "User not found" });
       if (user.isActive)
-        return res.status(400).json({ message: 'User already verified' });
+        return res.status(400).json({ message: "User already verified" });
       const otp = generateOTP();
       const otpExpires = new Date(Date.now() + 10 * 60 * 1000);
       user.otp = otp;
@@ -81,27 +81,27 @@ export const authController = {
       await user.save();
       await sendEmail(
         user.email,
-        'Email Verification - New OTP Code',
-        `<h2>Hello ${user.name}!</h2><p>Your new OTP code is: <strong>${otp}</strong></p><p>This code will expire in 10 minutes.</p>`
+        "Email Verification - New OTP Code",
+        `<h2>Hello ${user.name}!</h2><p>Your new OTP code is: <strong>${otp}</strong></p><p>This code will expire in 10 minutes.</p>`,
       );
-      res.json({ message: 'New OTP sent to your email' });
+      res.json({ message: "New OTP sent to your email" });
     } catch (err) {
       next(err);
     }
   },
   login: async (req, res, next) => {
     try {
-      const { phone, password } = req.body;
-      const user = await CustomersModel.findOne({ phone });
+      const { email, password } = req.body;
+      const user = await CustomersModel.findOne({ email });
       if (!user)
-        return res.status(401).json({ message: 'Invalid credentials' });
+        return res.status(401).json({ message: "Invalid credentials" });
       if (!user.isActive)
         return res
           .status(403)
-          .json({ message: 'Please verify your email first' });
+          .json({ message: "Please verify your email first" });
       const match = await bcrypt.compare(password, user.password);
       if (!match)
-        return res.status(401).json({ message: 'Invalid credentials' });
+        return res.status(401).json({ message: "Invalid credentials" });
       const payload = { id: user._id.toString(), role: user.role };
       const accessToken = signAccessToken(payload);
       const refreshToken = signRefreshToken(payload);
@@ -116,11 +116,11 @@ export const authController = {
     try {
       const { refreshToken } = req.body;
       if (!refreshToken)
-        return res.status(400).json({ message: 'refreshToken required' });
+        return res.status(400).json({ message: "refreshToken required" });
       const payload = verifyRefreshToken(refreshToken);
       const user = await CustomersModel.findById(payload.id);
       if (!user || user.refreshToken !== refreshToken)
-        return res.status(401).json({ message: 'Invalid refresh token' });
+        return res.status(401).json({ message: "Invalid refresh token" });
       const newAccess = signAccessToken({
         id: user._id.toString(),
         role: user.role,

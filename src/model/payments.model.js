@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from "mongoose";
 const PaymentsSchema = new Schema({
   order_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -14,7 +14,7 @@ const PaymentsSchema = new Schema({
   },
   method: {
     type: String,
-    enum: ['pending', 'paid'],
+    enum: ["pending", "paid"],
   },
 });
-export const PaymentsModel = model('payments', PaymentsSchema);
+export const PaymentsModel = model("payments", PaymentsSchema);

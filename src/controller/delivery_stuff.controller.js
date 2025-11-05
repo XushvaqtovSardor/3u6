@@ -1,10 +1,10 @@
-import { Delivery_stuffModel } from '../model/delivery_stuff.model.js';
+import { Delivery_stuffModel } from "../model/delivery_stuff.model.js";
 
 export const delivery_stuffController = {
   find: async (req, res, next) => {
     try {
-      const page = Math.max(1, parseInt(req.query.page || '1'));
-      const limit = Math.max(1, parseInt(req.query.limit || '10'));
+      const page = Math.max(1, parseInt(req.query.page || "1"));
+      const limit = Math.max(1, parseInt(req.query.limit || "10"));
       const skip = (page - 1) * limit;
       const [items, total] = await Promise.all([
         Delivery_stuffModel.find({}).skip(skip).limit(limit).lean(),
@@ -19,7 +19,7 @@ export const delivery_stuffController = {
     try {
       const { id } = req.params;
       const staff = await Delivery_stuffModel.findById(id).lean();
-      if (!staff) return res.status(404).json({ message: 'Not found' });
+      if (!staff) return res.status(404).json({ message: "Not found" });
       res.json(staff);
     } catch (err) {
       next(err);

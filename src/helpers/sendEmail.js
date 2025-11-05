@@ -1,7 +1,8 @@
-import nodemailer from 'nodemailer';
+/* eslint-disable no-undef */
+import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
     user: process.env.email_user,
     pass: process.env.email_pass,
@@ -17,7 +18,7 @@ export const sendEmail = async (to, subject, html) => {
       html,
     });
   } catch (err) {
-    console.error('Email error:', err.message);
+    console.error("Email error:", err.message);
   }
 };
 

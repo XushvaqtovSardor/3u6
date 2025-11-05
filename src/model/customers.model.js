@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema } from "mongoose";
 const customersSchema = new Schema(
   {
     name: {
@@ -16,7 +16,6 @@ const customersSchema = new Schema(
       type: String,
       trim: true,
       required: true,
-      unique: true,
     },
     password: {
       type: String,
@@ -24,8 +23,8 @@ const customersSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ['admin', 'delivery_staff', 'customer'],
-      default: 'customer',
+      enum: ["admin", "delivery_staff", "customer"],
+      default: "customer",
     },
     isActive: {
       type: Boolean,
@@ -44,6 +43,6 @@ const customersSchema = new Schema(
       default: null,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
-export const CustomersModel = model('customers', customersSchema);
+export const CustomersModel = model("customers", customersSchema);

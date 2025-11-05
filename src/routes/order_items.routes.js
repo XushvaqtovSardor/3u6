@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import { order_itemsController } from '../controller/order_items.controller.js';
-import { authGuard, roleGuard } from '../helpers/auth.js';
-import { validate, orderItemSchema } from '../validation/validation.js';
+import { Router } from "express";
+import { order_itemsController } from "../controller/order_items.controller.js";
+import { authGuard, roleGuard } from "../helpers/auth.js";
+import { validate, orderItemSchema } from "../validation/validation.js";
 
 const router = Router();
 
@@ -116,19 +116,19 @@ const router = Router();
  */
 
 router
-  .route('/')
+  .route("/")
   .get(authGuard, order_itemsController.find)
   .post(authGuard, validate(orderItemSchema), order_itemsController.create);
 
 router
-  .route('/:id')
+  .route("/:id")
   .get(authGuard, order_itemsController.findOne)
   .patch(
     authGuard,
-    roleGuard('admin','customer'),
+    roleGuard("admin", "customer"),
     validate(orderItemSchema),
-    order_itemsController.update
+    order_itemsController.update,
   )
-  .delete(authGuard, roleGuard('admin'), order_itemsController.delete);
+  .delete(authGuard, roleGuard("admin"), order_itemsController.delete);
 
 export { router as order_itemsRouter };

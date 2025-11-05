@@ -1,10 +1,10 @@
-import { Order_itemsModel } from '../model/order_items.model.js';
+import { Order_itemsModel } from "../model/order_items.model.js";
 
 export const order_itemsController = {
   find: async (req, res, next) => {
     try {
-      const page = Math.max(1, parseInt(req.query.page || '1'));
-      const limit = Math.max(1, parseInt(req.query.limit || '10'));
+      const page = Math.max(1, parseInt(req.query.page || "1"));
+      const limit = Math.max(1, parseInt(req.query.limit || "10"));
       const skip = (page - 1) * limit;
       const [items, total] = await Promise.all([
         Order_itemsModel.find({}).skip(skip).limit(limit).lean(),
@@ -19,7 +19,7 @@ export const order_itemsController = {
     try {
       const { id } = req.params;
       const item = await Order_itemsModel.findById(id).lean();
-      if (!item) return res.status(404).json({ message: 'Not found' });
+      if (!item) return res.status(404).json({ message: "Not found" });
       res.json(item);
     } catch (err) {
       next(err);

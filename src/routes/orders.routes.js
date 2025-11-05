@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import { ordersController } from '../controller/orders.controller.js';
-import { authGuard, roleGuard } from '../helpers/auth.js';
-import { validate, orderSchema } from '../validation/validation.js';
+import { Router } from "express";
+import { ordersController } from "../controller/orders.controller.js";
+import { authGuard, roleGuard } from "../helpers/auth.js";
+import { validate, orderSchema } from "../validation/validation.js";
 
 const router = Router();
 
@@ -121,24 +121,24 @@ const router = Router();
  */
 
 router
-  .route('/')
+  .route("/")
   .get(authGuard, ordersController.find)
   .post(
     authGuard,
-    roleGuard('admin', 'customer'),
+    roleGuard("admin", "customer"),
     validate(orderSchema),
-    ordersController.create
+    ordersController.create,
   );
 
 router
-  .route('/:id')
+  .route("/:id")
   .get(authGuard, ordersController.findOne)
   .patch(
     authGuard,
-    roleGuard('admin', 'delivery_staff'),
+    roleGuard("admin", "delivery_staff"),
     validate(orderSchema),
-    ordersController.update
+    ordersController.update,
   )
-  .delete(authGuard, roleGuard('admin', 'customer'), ordersController.delete);
+  .delete(authGuard, roleGuard("admin", "customer"), ordersController.delete);
 
 export { router as ordersRouter };

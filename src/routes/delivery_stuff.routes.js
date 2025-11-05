@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import { delivery_stuffController } from '../controller/delivery_stuff.controller.js';
-import { authGuard, roleGuard } from '../helpers/auth.js';
-import { validate, deliveryStaffSchema } from '../validation/validation.js';
+import { Router } from "express";
+import { delivery_stuffController } from "../controller/delivery_stuff.controller.js";
+import { authGuard, roleGuard } from "../helpers/auth.js";
+import { validate, deliveryStaffSchema } from "../validation/validation.js";
 
 const router = Router();
 
@@ -117,24 +117,24 @@ const router = Router();
  */
 
 router
-  .route('/')
-  .get(authGuard, roleGuard('admin'), delivery_stuffController.find)
+  .route("/")
+  .get(authGuard, roleGuard("admin"), delivery_stuffController.find)
   .post(
     authGuard,
-    roleGuard('admin'),
+    roleGuard("admin"),
     validate(deliveryStaffSchema),
-    delivery_stuffController.create
+    delivery_stuffController.create,
   );
 
 router
-  .route('/:id')
-  .get(authGuard, roleGuard('admin'), delivery_stuffController.findOne)
+  .route("/:id")
+  .get(authGuard, roleGuard("admin"), delivery_stuffController.findOne)
   .patch(
     authGuard,
-    roleGuard('admin'),
+    roleGuard("admin"),
     validate(deliveryStaffSchema),
-    delivery_stuffController.update
+    delivery_stuffController.update,
   )
-  .delete(authGuard, roleGuard('admin'), delivery_stuffController.delete);
+  .delete(authGuard, roleGuard("admin"), delivery_stuffController.delete);
 
 export { router as delivery_stuffRouter };

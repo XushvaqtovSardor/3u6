@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import { districtsController } from '../controller/districts.controller.js';
-import { authGuard, roleGuard } from '../helpers/auth.js';
-import { validate, districtSchema } from '../validation/validation.js';
+import { Router } from "express";
+import { districtsController } from "../controller/districts.controller.js";
+import { authGuard, roleGuard } from "../helpers/auth.js";
+import { validate, districtSchema } from "../validation/validation.js";
 
 const router = Router();
 
@@ -108,24 +108,24 @@ const router = Router();
  */
 
 router
-  .route('/')
+  .route("/")
   .get(districtsController.find)
   .post(
     authGuard,
-    roleGuard('admin'),
+    roleGuard("admin"),
     validate(districtSchema),
-    districtsController.create
+    districtsController.create,
   );
 
 router
-  .route('/:id')
+  .route("/:id")
   .get(districtsController.findOne)
   .patch(
     authGuard,
-    roleGuard('admin'),
+    roleGuard("admin"),
     validate(districtSchema),
-    districtsController.update
+    districtsController.update,
   )
-  .delete(authGuard, roleGuard('admin'), districtsController.delete);
+  .delete(authGuard, roleGuard("admin"), districtsController.delete);
 
 export { router as districtsRouter };

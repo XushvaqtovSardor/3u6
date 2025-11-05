@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema } from "mongoose";
 const Water_productSchema = new Schema({
   name: String,
   volume_liters: Number,
@@ -8,4 +8,4 @@ const Water_productSchema = new Schema({
     default: 0,
   },
 });
-export const Water_productModel = model('water_products', Water_productSchema);
+export const Water_productModel = model("water_products", Water_productSchema);

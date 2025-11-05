@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from "mongoose";
 const Delivery_stuff = new Schema({
   name: {
     type: String,
@@ -14,7 +14,7 @@ const Delivery_stuff = new Schema({
   },
   district_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'districts',
+    ref: "districts",
   },
 });
-export const Delivery_stuffModel = model('delivery_stuffs', Delivery_stuff);
+export const Delivery_stuffModel = model("delivery_stuffs", Delivery_stuff);

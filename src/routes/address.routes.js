@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import { addressController } from '../controller/address.controller.js';
-import { authGuard, roleGuard } from '../helpers/auth.js';
-import { validate, addressSchema } from '../validation/validation.js';
+import { Router } from "express";
+import { addressController } from "../controller/address.controller.js";
+import { authGuard, roleGuard } from "../helpers/auth.js";
+import { validate, addressSchema } from "../validation/validation.js";
 
 const router = Router();
 
@@ -122,32 +122,32 @@ const router = Router();
  */
 
 router
-  .route('/')
-  .get(authGuard, roleGuard('admin'), addressController.find)
+  .route("/")
+  .get(authGuard, roleGuard("admin"), addressController.find)
   .post(
     authGuard,
-    roleGuard('admin', 'customer'),
+    roleGuard("admin", "customer"),
     validate(addressSchema),
-    addressController.create
+    addressController.create,
   );
 
 router
-  .route('/:id')
+  .route("/:id")
   .get(
     authGuard,
-    roleGuard('admin', 'delivery_staff'),
-    addressController.findOne
+    roleGuard("admin", "delivery_staff"),
+    addressController.findOne,
   )
   .patch(
     authGuard,
-    roleGuard('admin', 'customer'),
+    roleGuard("admin", "customer"),
     validate(addressSchema),
-    addressController.update
+    addressController.update,
   )
   .delete(
     authGuard,
-    roleGuard('admin', 'delivery_staff'),
-    addressController.delete
+    roleGuard("admin", "delivery_staff"),
+    addressController.delete,
   );
 
 export { router as addressRouter };

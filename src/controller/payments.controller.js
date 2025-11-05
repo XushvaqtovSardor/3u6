@@ -1,10 +1,10 @@
-import { PaymentsModel } from '../model/payments.model.js';
+import { PaymentsModel } from "../model/payments.model.js";
 
 export const paymentsController = {
   find: async (req, res, next) => {
     try {
-      const page = Math.max(1, parseInt(req.query.page || '1'));
-      const limit = Math.max(1, parseInt(req.query.limit || '10'));
+      const page = Math.max(1, parseInt(req.query.page || "1"));
+      const limit = Math.max(1, parseInt(req.query.limit || "10"));
       const skip = (page - 1) * limit;
       const [items, total] = await Promise.all([
         PaymentsModel.find({}).skip(skip).limit(limit).lean(),
@@ -19,7 +19,7 @@ export const paymentsController = {
     try {
       const { id } = req.params;
       const payment = await PaymentsModel.findById(id).lean();
-      if (!payment) return res.status(404).json({ message: 'Not found' });
+      if (!payment) return res.status(404).json({ message: "Not found" });
       res.json(payment);
     } catch (err) {
       next(err);

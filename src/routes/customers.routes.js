@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import { customersController } from '../controller/customers.controller.js';
-import { authGuard, selfGuard, roleGuard } from '../helpers/auth.js';
-import { validate, customerSchema } from '../validation/validation.js';
+import { Router } from "express";
+import { customersController } from "../controller/customers.controller.js";
+import { authGuard, selfGuard, roleGuard } from "../helpers/auth.js";
+import { validate, customerSchema } from "../validation/validation.js";
 
 const router = Router();
 
@@ -112,19 +112,19 @@ const router = Router();
  */
 
 router
-  .route('/')
-  .get(authGuard, roleGuard('admin'), customersController.find)
+  .route("/")
+  .get(authGuard, roleGuard("admin"), customersController.find)
   .post(validate(customerSchema), customersController.create);
 
 router
-  .route('/:id')
+  .route("/:id")
   .get(authGuard, selfGuard(), customersController.findOne)
   .patch(
     authGuard,
     selfGuard(),
     validate(customerSchema),
-    customersController.update
+    customersController.update,
   )
-  .delete(authGuard, roleGuard('admin'), customersController.delete);
+  .delete(authGuard, roleGuard("admin"), customersController.delete);
 
 export { router as customersRouter };

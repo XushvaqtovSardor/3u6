@@ -1,10 +1,10 @@
-import { DistrictsModel } from '../model/districts.model.js';
+import { DistrictsModel } from "../model/districts.model.js";
 
 export const districtsController = {
   find: async (req, res, next) => {
     try {
-      const page = Math.max(1, parseInt(req.query.page || '1'));
-      const limit = Math.max(1, parseInt(req.query.limit || '10'));
+      const page = Math.max(1, parseInt(req.query.page || "1"));
+      const limit = Math.max(1, parseInt(req.query.limit || "10"));
       const skip = (page - 1) * limit;
       const [items, total] = await Promise.all([
         DistrictsModel.find({}).skip(skip).limit(limit).lean(),
@@ -19,7 +19,7 @@ export const districtsController = {
     try {
       const { id } = req.params;
       const district = await DistrictsModel.findById(id).lean();
-      if (!district) return res.status(404).json({ message: 'Not found' });
+      if (!district) return res.status(404).json({ message: "Not found" });
       res.json(district);
     } catch (err) {
       next(err);

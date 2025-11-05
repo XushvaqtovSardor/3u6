@@ -1,15 +1,15 @@
-import bcrypt from 'bcrypt';
-import { CustomersModel } from '../model/customers.model.js';
+import bcrypt from "bcrypt";
+import { CustomersModel } from "../model/customers.model.js";
 
 export const customersController = {
   find: async (req, res, next) => {
     try {
-      const page = Math.max(1, parseInt(req.query.page || '1'));
-      const limit = Math.max(1, parseInt(req.query.limit || '10'));
+      const page = Math.max(1, parseInt(req.query.page || "1"));
+      const limit = Math.max(1, parseInt(req.query.limit || "10"));
       const skip = (page - 1) * limit;
       const [items, total] = await Promise.all([
         CustomersModel.find({})
-          .select('-password -refreshToken')
+          .select("-password -refreshToken")
           .skip(skip)
           .limit(limit)
           .lean(),
@@ -24,9 +24,9 @@ export const customersController = {
     try {
       const { id } = req.params;
       const customer = await CustomersModel.findById(id)
-        .select('-password -refreshToken')
+        .select("-password -refreshToken")
         .lean();
-      if (!customer) return res.status(404).json({ message: 'Not found' });
+      if (!customer) return res.status(404).json({ message: "Not found" });
       res.json(customer);
     } catch (err) {
       next(err);

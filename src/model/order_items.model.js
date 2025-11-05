@@ -1,13 +1,13 @@
-import mongoose, { model, Schema, Types } from 'mongoose';
+import mongoose, { model, Schema } from "mongoose";
 
 const Order_itemsSchema = new Schema({
   order_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'orders',
+    ref: "orders",
   },
   product_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'water_products',
+    ref: "water_products",
   },
   quantity: {
     type: Number,
@@ -18,4 +18,4 @@ const Order_itemsSchema = new Schema({
     default: null,
   },
 });
-export const Order_itemsModel = model('order_items', Order_itemsSchema);
+export const Order_itemsModel = model("order_items", Order_itemsSchema);

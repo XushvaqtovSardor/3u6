@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from "mongoose";
 export const AdressSchema = new Schema(
   {
     name: {
@@ -8,7 +8,7 @@ export const AdressSchema = new Schema(
     },
     customer_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'customers',
+      ref: "customers",
       default: null,
     },
     address: {
@@ -23,9 +23,9 @@ export const AdressSchema = new Schema(
     },
     district_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'districts',
+      ref: "districts",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
-export const AddressModel = model('address', AdressSchema);
+export const AddressModel = model("address", AdressSchema);

@@ -1,26 +1,26 @@
-import { Router } from 'express';
-import { authController } from '../controller/auth.controller.js';
-import { validate, authSchemas } from '../validation/validation.js';
+import { Router } from "express";
+import { authController } from "../controller/auth.controller.js";
+import { validate, authSchemas } from "../validation/validation.js";
 
 const router = Router();
 
 router.post(
-  '/register',
+  "/register",
   validate(authSchemas.register),
-  authController.register
+  authController.register,
 );
 router.post(
-  '/verify-otp',
+  "/verifyEmail",
   validate(authSchemas.verifyOTP),
-  authController.verifyOTP
+  authController.verifyOTP,
 );
 router.post(
-  '/resend-otp',
+  "/resendEmail",
   validate(authSchemas.resendOTP),
-  authController.resendOTP
+  authController.resendOTP,
 );
-router.post('/login', validate(authSchemas.login), authController.login);
-router.post('/refresh', validate(authSchemas.refresh), authController.refresh);
-router.post('/logout', validate(authSchemas.logout), authController.logout);
+router.post("/login", validate(authSchemas.login), authController.login);
+router.post("/refresh", validate(authSchemas.refresh), authController.refresh);
+router.post("/logout", validate(authSchemas.logout), authController.logout);
 
 export { router as authRouter };

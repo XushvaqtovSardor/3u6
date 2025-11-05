@@ -1,7 +1,7 @@
-import { Router } from 'express';
-import { water_productsController } from '../controller/water_products.controller.js';
-import { authGuard, roleGuard } from '../helpers/auth.js';
-import { validate, waterProductSchema } from '../validation/validation.js';
+import { Router } from "express";
+import { water_productsController } from "../controller/water_products.controller.js";
+import { authGuard, roleGuard } from "../helpers/auth.js";
+import { validate, waterProductSchema } from "../validation/validation.js";
 
 const router = Router();
 
@@ -117,24 +117,24 @@ const router = Router();
  */
 
 router
-  .route('/')
+  .route("/")
   .get(water_productsController.find)
   .post(
     authGuard,
-    roleGuard('admin'),
+    roleGuard("admin"),
     validate(waterProductSchema),
-    water_productsController.create
+    water_productsController.create,
   );
 
 router
-  .route('/:id')
+  .route("/:id")
   .get(water_productsController.findOne)
   .patch(
     authGuard,
-    roleGuard('admin'),
+    roleGuard("admin"),
     validate(waterProductSchema),
-    water_productsController.update
+    water_productsController.update,
   )
-  .delete(authGuard, roleGuard('admin'), water_productsController.delete);
+  .delete(authGuard, roleGuard("admin"), water_productsController.delete);
 
 export { router as water_productsRouter };
