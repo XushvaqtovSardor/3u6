@@ -1,0 +1,7 @@
+{"level":"error","message":"ishlayaptimi"}
+{
+  level: '\x1B[31merror\x1B[39m',
+  message: 'xatolik',
+  label: 'right meow!',
+  timestamp: '2025-11-05 19:12:05'
+}

@@ -123,7 +123,7 @@ router
     authGuard,
     roleGuard("admin"),
     validate(waterProductSchema),
-    water_productsController.create,
+    water_productsController.create
   );
 
 router
@@ -133,7 +133,7 @@ router
     authGuard,
     roleGuard("admin"),
     validate(waterProductSchema),
-    water_productsController.update,
+    water_productsController.update
   )
   .delete(authGuard, roleGuard("admin"), water_productsController.delete);
 

@@ -123,7 +123,7 @@ router
     authGuard,
     roleGuard("admin"),
     validate(deliveryStaffSchema),
-    delivery_stuffController.create,
+    delivery_stuffController.create
   );
 
 router
@@ -133,7 +133,7 @@ router
     authGuard,
     roleGuard("admin"),
     validate(deliveryStaffSchema),
-    delivery_stuffController.update,
+    delivery_stuffController.update
   )
   .delete(authGuard, roleGuard("admin"), delivery_stuffController.delete);
 

@@ -127,7 +127,7 @@ router
     authGuard,
     roleGuard("admin", "customer"),
     validate(orderItemSchema),
-    order_itemsController.update,
+    order_itemsController.update
   )
   .delete(authGuard, roleGuard("admin"), order_itemsController.delete);
 

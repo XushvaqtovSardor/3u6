@@ -128,26 +128,18 @@ router
     authGuard,
     roleGuard("admin", "customer"),
     validate(addressSchema),
-    addressController.create,
+    addressController.create
   );
 
 router
   .route("/:id")
-  .get(
-    authGuard,
-    roleGuard("admin", "delivery_staff"),
-    addressController.findOne,
-  )
+  .get(authGuard, roleGuard("admin", "delivery_staff"), addressController.findOne)
   .patch(
     authGuard,
     roleGuard("admin", "customer"),
     validate(addressSchema),
-    addressController.update,
+    addressController.update
   )
-  .delete(
-    authGuard,
-    roleGuard("admin", "delivery_staff"),
-    addressController.delete,
-  );
+  .delete(authGuard, roleGuard("admin", "delivery_staff"), addressController.delete);
 
 export { router as addressRouter };

@@ -110,22 +110,12 @@ const router = Router();
 router
   .route("/")
   .get(districtsController.find)
-  .post(
-    authGuard,
-    roleGuard("admin"),
-    validate(districtSchema),
-    districtsController.create,
-  );
+  .post(authGuard, roleGuard("admin"), validate(districtSchema), districtsController.create);
 
 router
   .route("/:id")
   .get(districtsController.findOne)
-  .patch(
-    authGuard,
-    roleGuard("admin"),
-    validate(districtSchema),
-    districtsController.update,
-  )
+  .patch(authGuard, roleGuard("admin"), validate(districtSchema), districtsController.update)
   .delete(authGuard, roleGuard("admin"), districtsController.delete);
 
 export { router as districtsRouter };

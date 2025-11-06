@@ -7,14 +7,9 @@ export const addressController = {
       const limit = Math.max(1, parseInt(req.query.limit || "10"));
       const skip = (page - 1) * limit;
       const query = {};
-      if (req.user && req.user.role === "customer")
-        query.customer_id = req.user.id;
+      if (req.user && req.user.role === "customer") query.customer_id = req.user.id;
       const [items, total] = await Promise.all([
-        AddressModel.find(query)
-          .populate("district_id")
-          .skip(skip)
-          .limit(limit)
-          .lean(),
+        AddressModel.find(query).populate("district_id").skip(skip).limit(limit).lean(),
         AddressModel.countDocuments(query),
       ]);
       console.log(items);

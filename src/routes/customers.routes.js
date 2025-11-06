@@ -119,12 +119,7 @@ router
 router
   .route("/:id")
   .get(authGuard, selfGuard(), customersController.findOne)
-  .patch(
-    authGuard,
-    selfGuard(),
-    validate(customerSchema),
-    customersController.update,
-  )
+  .patch(authGuard, selfGuard(), validate(customerSchema), customersController.update)
   .delete(authGuard, roleGuard("admin"), customersController.delete);
 
 export { router as customersRouter };

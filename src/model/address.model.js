@@ -26,6 +26,6 @@ export const AdressSchema = new Schema(
       ref: "districts",
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 export const AddressModel = model("address", AdressSchema);

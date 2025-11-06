@@ -43,6 +43,6 @@ const customersSchema = new Schema(
       default: null,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 export const CustomersModel = model("customers", customersSchema);

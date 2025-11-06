@@ -130,7 +130,7 @@ router
     authGuard,
     roleGuard("admin", "customer"),
     validate(paymentSchema),
-    paymentsController.update,
+    paymentsController.update
   )
   .delete(authGuard, roleGuard("admin", "customer"), paymentsController.delete);
 
